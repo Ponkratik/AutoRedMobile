@@ -63,4 +63,6 @@ dependencies {
 
     val koinVersion = "3.2.0"
     implementation("io.insert-koin:koin-android:$koinVersion")
+
+    implementation("com.google.code.gson:gson:2.10")
 }

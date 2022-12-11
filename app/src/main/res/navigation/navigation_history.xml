@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_history"
+    app:startDestination="@id/fragment_history">
+
+    <fragment
+        android:id="@+id/fragment_history"
+        android:name="com.ponkratov.autored.presentation.ui.home.tab.history.HistoryFragment"
+        tools:layout="@layout/fragment_history" />
+</navigation>
