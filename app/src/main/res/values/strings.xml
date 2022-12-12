@@ -9,4 +9,16 @@
     <string name="bottom_nav_account">Аккаунт</string>
     <string name="bottom_nav_history">История</string>
     <string name="welcome_text_register">Регистрация</string>
+    <string name="register_continue">Далее</string>
+    <string name="fio">Фио</string>
+    <string name="phone">Телефон</string>
+    <string name="birthdate">Дата рождения</string>
+    <string name="profile_description">Описание профиля</string>
+    <string name="passport_number">Номер паспорта</string>
+    <string name="driver_license_number">Номер вод.удостоверения</string>
+    <string name="photo_passport">Фотография паспорта</string>
+    <string name="driver_license_photo">Фотография вод. удостоверения</string>
+    <string name="register_request_header">Ваша заявка находится на рассмотрении</string>
+    <string name="register_request_body">Подтверждение данных может занять до 1 часа  от момента регистрации</string>
+    <string name="avatar">Фотография профиля</string>
 </resources>

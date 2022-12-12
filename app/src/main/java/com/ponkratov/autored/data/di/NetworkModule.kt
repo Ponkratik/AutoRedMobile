@@ -1,5 +1,6 @@
 package com.ponkratov.autored.data.di
 
+import com.google.gson.GsonBuilder
 import com.ponkratov.autored.data.api.AuthApi
 import com.ponkratov.autored.data.sharedprefs.JwtSharedPrefs
 import okhttp3.Interceptor
@@ -40,9 +41,11 @@ val networkModule = module {
 }
 
 private fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
+    val gson = GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create()
+
     return Retrofit.Builder()
         .baseUrl(SERVER_URL)
-        .addConverterFactory(GsonConverterFactory.create())
+        .addConverterFactory(GsonConverterFactory.create(gson))
         .client(okHttpClient)
         .build()
 }

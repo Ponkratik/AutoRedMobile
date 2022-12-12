@@ -11,7 +11,6 @@ import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
-import java.util.*
 
 class AuthRepositoryImpl(
     private val authApi: AuthApi
@@ -36,13 +35,13 @@ class AuthRepositoryImpl(
             )
         val passportBody =
             MultipartBody.Part.createFormData(
-                "avatar",
+                "passportPhoto",
                 passportPhoto.name,
                 passportPhoto.asRequestBody("image/*".toMediaTypeOrNull())
             )
         val driverLicenseBody =
             MultipartBody.Part.createFormData(
-                "avatar",
+                "driverLicensePhoto",
                 driverLicensePhoto.name,
                 driverLicensePhoto.asRequestBody("image/*".toMediaTypeOrNull())
             )
@@ -52,6 +51,6 @@ class AuthRepositoryImpl(
             avatarPhoto = profileBody,
             passportPhoto = passportBody,
             driverLicensePhoto = driverLicenseBody
-        )
+        ).message
     }
 }
