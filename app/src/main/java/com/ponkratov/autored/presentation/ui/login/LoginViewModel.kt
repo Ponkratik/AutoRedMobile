@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ponkratov.autored.domain.model.request.LoginRequest
 import com.ponkratov.autored.domain.usecase.LoginUseCase
+import com.ponkratov.autored.domain.usecase.SaveJwtResponseUseCase
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -13,8 +14,8 @@ import retrofit2.HttpException
 
 class LoginViewModel(
     private val loginUseCase: LoginUseCase,
-
-    ) : ViewModel() {
+    private val saveJwtResponseUseCase: SaveJwtResponseUseCase
+) : ViewModel() {
     private var authFlow = MutableSharedFlow<LoginRequest>(
         replay = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST
     )
@@ -39,6 +40,7 @@ class LoginViewModel(
             loginUseCase(loginRequest)
                 .fold(
                     onSuccess = {
+                        saveJwtResponseUseCase(it)
                         dataFlow.tryEmit(Unit)
                     },
                     onFailure = {

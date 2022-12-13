@@ -21,4 +21,22 @@
     <string name="register_request_header">Ваша заявка находится на рассмотрении</string>
     <string name="register_request_body">Подтверждение данных может занять до 1 часа  от момента регистрации</string>
     <string name="avatar">Фотография профиля</string>
+    <string name="car_photo">Фотография автомобиля</string>
+    <string name="star">Star</string>
+    <string name="apply">Применить</string>
+    <string name="filters">Фильтры</string>
+    <string name="back">Назад</string>
+    <string name="body_type">Тип кузова</string>
+    <string name="fuel_type">Тип топлива</string>
+    <string name="transmission_type">Тип трансмиссии</string>
+    <string name="doors">Дверей</string>
+    <string name="seats">Мест</string>
+    <string name="color">Цвет</string>
+    <string name="book">Забронировать</string>
+    <string name="day">Сутки</string>
+    <string name="week">Неделя</string>
+    <string name="month">Месяц</string>
+    <string name="text_price">BYN %1$.1f</string>
+    <string name="text_car_make_model_year">%1s %2s %3s</string>
+    <string name="feature">feature</string>
 </resources>

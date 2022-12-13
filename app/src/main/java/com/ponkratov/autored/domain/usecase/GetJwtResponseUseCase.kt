@@ -7,5 +7,5 @@ class GetJwtResponseUseCase(
     private val sharedPrefsRepository: SharedPrefsRepository
 ) {
 
-    suspend operator fun invoke(): JwtResponse = sharedPrefsRepository.getJwt()
+    operator fun invoke(): JwtResponse = sharedPrefsRepository.getJwt()
 }

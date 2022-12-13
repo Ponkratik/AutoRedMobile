@@ -7,6 +7,17 @@
 
     <fragment
         android:id="@+id/fragment_search"
-        android:name="com.ponkratov.autored.presentation.ui.home.tab.search.SearchFragment"
-        tools:layout="@layout/fragment_search" />
+        android:name="com.ponkratov.autored.presentation.ui.home.tab.search.list.SearchFragment"
+        tools:layout="@layout/fragment_search" >
+        <action
+            android:id="@+id/action_fragment_search_to_advertisementDetailsFragment"
+            app:destination="@id/advertisementDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/advertisementDetailsFragment"
+        android:name="com.ponkratov.autored.presentation.ui.home.tab.search.details.AdvertisementDetailsFragment"
+        tools:layout="@layout/fragment_advertisement_details" >
+        <argument android:name="advertisementResponse"
+            app:argType="string"/>
+    </fragment>
 </navigation>

@@ -45,6 +45,7 @@ dependencies {
     implementation("androidx.appcompat:appcompat:1.5.1")
     implementation("com.google.android.material:material:1.7.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
+    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.4")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.0")
@@ -61,8 +62,12 @@ dependencies {
 
     implementation("androidx.fragment:fragment-ktx:1.5.5")
 
+    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
+    implementation ("com.google.android.flexbox:flexbox:3.0.0")
+
     val koinVersion = "3.2.0"
     implementation("io.insert-koin:koin-android:$koinVersion")
 
     implementation("com.google.code.gson:gson:2.10")
+    implementation(kotlin("reflect"))
 }

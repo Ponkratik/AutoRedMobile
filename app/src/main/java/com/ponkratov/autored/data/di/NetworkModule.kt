@@ -1,6 +1,7 @@
 package com.ponkratov.autored.data.di
 
 import com.google.gson.GsonBuilder
+import com.ponkratov.autored.data.api.AdvertisementApi
 import com.ponkratov.autored.data.api.AuthApi
 import com.ponkratov.autored.data.sharedprefs.JwtSharedPrefs
 import okhttp3.Interceptor
@@ -38,6 +39,7 @@ val networkModule = module {
     }
 
     single { get<Retrofit>(qualifier(NetworkApiQualifier.NO_AUTH)).create<AuthApi>() }
+    single { get<Retrofit>(qualifier(NetworkApiQualifier.NO_AUTH)).create<AdvertisementApi>() }
 }
 
 private fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {

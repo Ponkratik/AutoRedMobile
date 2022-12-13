@@ -1,7 +1,9 @@
 package com.ponkratov.autored.data.di
 
+import com.ponkratov.autored.data.repository.AdvertisementRepositoryImpl
 import com.ponkratov.autored.data.repository.AuthRepositoryImpl
 import com.ponkratov.autored.data.repository.SharedPrefsRepositoryImpl
+import com.ponkratov.autored.domain.repository.AdvertisementRepository
 import com.ponkratov.autored.domain.repository.AuthRepository
 import com.ponkratov.autored.domain.repository.SharedPrefsRepository
 import org.koin.dsl.bind
@@ -15,4 +17,8 @@ val repositoryModule = module {
     single {
         SharedPrefsRepositoryImpl(get())
     } bind SharedPrefsRepository::class
+
+    single {
+        AdvertisementRepositoryImpl(get())
+    } bind AdvertisementRepository::class
 }
