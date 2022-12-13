@@ -12,4 +12,5 @@ val useCaseModule = module {
     singleOf(::GetAdvertisementResponseUseCase)
     singleOf(::GetAdvertisementResponsesUseCase)
     singleOf(::AddAdvertisementUseCase)
+    singleOf(::BookRideUseCase)
 }

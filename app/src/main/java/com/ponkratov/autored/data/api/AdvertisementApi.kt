@@ -28,4 +28,6 @@ interface AdvertisementApi {
         @Part("car-features") carFeatures: CarFeatureListDTO,
         @Part files: List<MultipartBody.Part>
     ): MessageResponse
+
+
 }

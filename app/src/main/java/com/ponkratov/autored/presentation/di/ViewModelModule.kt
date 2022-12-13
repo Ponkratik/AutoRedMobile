@@ -1,5 +1,6 @@
 package com.ponkratov.autored.presentation.di
 
+import com.ponkratov.autored.presentation.ui.home.tab.search.details.AdvertisementDetailsViewModel
 import com.ponkratov.autored.presentation.ui.home.tab.search.list.SearchViewModel
 import com.ponkratov.autored.presentation.ui.login.LoginViewModel
 import com.ponkratov.autored.presentation.ui.registration.RegisterPhotoViewModel
@@ -10,4 +11,5 @@ val viewModelModule = module {
     viewModelOf(::LoginViewModel)
     viewModelOf(::RegisterPhotoViewModel)
     viewModelOf(::SearchViewModel)
+    viewModelOf(::AdvertisementDetailsViewModel)
 }
