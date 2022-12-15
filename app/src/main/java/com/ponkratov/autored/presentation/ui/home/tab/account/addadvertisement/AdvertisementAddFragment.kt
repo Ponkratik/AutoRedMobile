@@ -1,7 +1,11 @@
 package com.ponkratov.autored.presentation.ui.home.tab.account.addadvertisement
 
 import android.app.AlertDialog
+import android.content.Context
+import android.content.ContextWrapper
 import android.database.Cursor
+import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -10,19 +14,28 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
+import android.widget.ImageView
+import android.widget.LinearLayout
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.view.forEach
+import androidx.core.view.get
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.loader.content.CursorLoader
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
+import com.ponkratov.autored.R
 import com.ponkratov.autored.databinding.FragmentAdvertisementAddBinding
+import com.ponkratov.autored.databinding.ItemImageBinding
 import com.ponkratov.autored.presentation.extensions.addHorisontalSpace
 import com.ponkratov.autored.presentation.extensions.hideKeyboard
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.io.File
+import java.io.FileOutputStream
+import java.io.OutputStream
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -128,6 +141,13 @@ class AdvertisementAddFragment : Fragment() {
             }
 
             buttonCreate.setOnClickListener {
+                val files: MutableList<File> = mutableListOf()
+                for(pos in 1 .. imageAdapter.currentList.size) {
+                    val view = requireNotNull(photoRecyclerView.findViewHolderForAdapterPosition(pos)?.itemView)
+                    val lL = view.findViewById(R.id.car_photo) as ImageView
+                    files.add(bmpToFile((lL.drawable as BitmapDrawable).bitmap))
+            }
+
                 if (!validateInputs()) return@setOnClickListener
                 viewModel.onSendButtonClicked(
                     checkboxConditioner.isChecked,
@@ -166,9 +186,12 @@ class AdvertisementAddFragment : Fragment() {
                     editTextPricePerDay.text.toString().toDouble(),
                     editTextPricePerWeek.text.toString().toDouble(),
                     editTextPricePerMonth.text.toString().toDouble(),
-                    imageAdapter.currentList
+                    files
                 )
             }
+
+
+
 
             buttonClear.setOnClickListener {
                 clearInputs()
@@ -214,6 +237,17 @@ class AdvertisementAddFragment : Fragment() {
                 .getResponseFlow
                 .launchIn(viewLifecycleOwner.lifecycleScope)
         }
+    }
+
+    private fun bmpToFile(bitmap: Bitmap): File {
+        val wrapper = ContextWrapper(requireContext())
+        var file = wrapper.getDir("Images", Context.MODE_PRIVATE)
+        file = File(file, "${UUID.randomUUID()}.jpg")
+        val stream: OutputStream = FileOutputStream(file)
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream)
+        stream.flush()
+        stream.close()
+        return file
     }
 
     private fun validateInputs(): Boolean {

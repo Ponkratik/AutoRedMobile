@@ -102,7 +102,7 @@ class AdvertisementAddViewModel(
         pricePerDay: Double,
         pricePerWeek: Double,
         pricePerMonth: Double,
-        filesList: List<Uri>
+        filesList: List<File>
     ) {
         carFeatureList = CarFeatureList(
             0,
@@ -146,11 +146,7 @@ class AdvertisementAddViewModel(
             pricePerMonth = pricePerMonth
         )
 
-        files = filesList.map {
-            //File(requireNotNull(it.path))
-
-            File(it.toString().replace("content:", "file:"))
-        }
+        files = filesList
 
         initFlow.tryEmit(Unit)
     }

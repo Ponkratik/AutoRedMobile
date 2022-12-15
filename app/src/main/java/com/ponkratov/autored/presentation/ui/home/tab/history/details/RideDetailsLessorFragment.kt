@@ -1,23 +1,44 @@
 package com.ponkratov.autored.presentation.ui.home.tab.history.details
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.google.gson.Gson
+import com.ponkratov.autored.R
 import com.ponkratov.autored.databinding.FragmentHistoryBinding
 import com.ponkratov.autored.databinding.FragmentRideDetailsLessorBinding
+import com.ponkratov.autored.domain.model.response.AdvertisementResponse
+import com.ponkratov.autored.domain.model.response.RideResponse
+import com.ponkratov.autored.presentation.extensions.addHorisontalSpace
+import com.ponkratov.autored.presentation.ui.home.tab.account.ridelist.RideListLesseeFragmentDirections
 import com.ponkratov.autored.presentation.ui.home.tab.history.HistoryViewModel
 import com.ponkratov.autored.presentation.ui.home.tab.history.RideAdapter
+import com.ponkratov.autored.presentation.ui.home.tab.search.details.ImageAdapter
 import com.ponkratov.autored.presentation.ui.home.tab.search.list.SearchFragmentDirections
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.text.SimpleDateFormat
+import java.util.*
 
 class RideDetailsLessorFragment : Fragment() {
 
     private var _binding: FragmentRideDetailsLessorBinding? = null
     private val binding get() = requireNotNull(_binding)
+
+    private val viewModel by viewModel<RideDetailsLessorViewModel>()
+
+    private val args by navArgs<RideDetailsLessorFragmentArgs>()
+
+    private val imageAdapter by lazy {
+        ImageAdapter(
+            context = requireContext()
+        )
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,7 +53,114 @@ class RideDetailsLessorFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        with(binding) {
+            progressCircular.isVisible = false
+            layoutRide.isVisible = true
 
+            photoRecyclerView.adapter = imageAdapter
+            photoRecyclerView.addHorisontalSpace()
+
+            val rideResponse =
+                Gson().fromJson(args.rideResponse, RideResponse::class.java)
+
+            initButtons(rideResponse)
+
+            imageAdapter.submitList(rideResponse.advertisementResponse.photoPaths.sortedDescending())
+
+            carName.text = getString(
+                R.string.text_car_make_model_year,
+                rideResponse.advertisementResponse.car.make,
+                rideResponse.advertisementResponse.car.model,
+                SimpleDateFormat(
+                    "yyyy",
+                    Locale.US
+                ).format(rideResponse.advertisementResponse.car.manufacturedYear)
+            )
+
+            textPricePerDay.text =
+                getString(
+                    R.string.text_price,
+                    rideResponse.advertisementResponse.advertisement.pricePerDay
+                )
+            textPricePerWeek.text =
+                getString(
+                    R.string.text_price,
+                    rideResponse.advertisementResponse.advertisement.pricePerWeek
+                )
+            textPricePerMonth.text =
+                getString(
+                    R.string.text_price,
+                    rideResponse.advertisementResponse.advertisement.pricePerMonth
+                )
+
+            textLinkChat.text = rideResponse.user.email
+            textLinkPayment.text = "Перейти"
+
+            textLinkPayment.setOnClickListener {
+                findNavController().navigate(RideDetailsLessorFragmentDirections.actionDetailsToPayment())
+            }
+
+            buttonBack.setOnClickListener {
+                findNavController().navigateUp()
+            }
+
+            buttonSignAct.setOnClickListener {
+                AlertDialog
+                    .Builder(requireContext())
+                    .setTitle("Подписание акта")
+                    .setMessage("Нажимая на кнопку \"ОК\" вы подтверждаете ознакомление с условиями сервиса")
+                    .setPositiveButton(android.R.string.ok, null)
+                    .setNegativeButton(android.R.string.cancel, null)
+                    .show()
+            }
+        }
+
+    }
+
+    private fun initButtons(rideResponse: RideResponse) {
+        with(binding) {
+            if (rideResponse.ride.dateEnd != Date(0)) {
+                textReview.isVisible = true
+                descriptionTable.isVisible = false
+                buttonSignAct.isVisible = false
+                buttonStartRide.isVisible = false
+                textStatus.text = "Поездка завершена"
+                return
+            }
+
+            if (rideResponse.ride.dateEnd == Date(0)) {
+                textReview.isVisible = false
+                descriptionTable.isVisible = true
+                buttonSignAct.isVisible = true
+                buttonStartRide.isVisible = false
+                textStatus.text = "Автомобиль забронирован"
+                return
+            }
+
+            if (rideResponse.ride.dateSignedLessee != Date(0)
+                && rideResponse.ride.dateSignedLessor == Date(0)) {
+                textReview.isVisible = false
+                descriptionTable.isVisible = true
+                buttonSignAct.isVisible = true
+                buttonSignAct.isActivated = false
+                buttonStartRide.isVisible = false
+                textStatus.text = "Акт подписан"
+                return
+            }
+
+            if (rideResponse.ride.dateSignedLessee != Date(0)
+                && rideResponse.ride.dateSignedLessor != Date(0)
+                && rideResponse.ride.dateStart != Date(0)
+                && rideResponse.ride.dateEnd == Date(0)) {
+                textReview.isVisible = false
+                descriptionTable.isVisible = true
+                buttonSignAct.isVisible = false
+                buttonStartRide.isVisible = true
+                buttonStartRide.text = "Завершить поездку"
+                textStatus.text = "Поездка начата"
+                return
+            }
+        }
     }
 
     override fun onDestroyView() {
