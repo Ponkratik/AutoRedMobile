@@ -17,6 +17,9 @@ interface AdvertisementApi {
     @GET("advertisement/get/full/all")
     suspend fun getAdvertisementsResponse(): List<AdvertisementResponseDTO>
 
+    @GET("advertisement/get/full/all/{id}")
+    suspend fun getAdvertisementsResponseByUserId(@Path("id") userId: Long): List<AdvertisementResponseDTO>
+
     @GET("advertisement/get/full/{id}")
     suspend fun getAdvertisementResponse(@Path("id") advertisementId: Long): AdvertisementResponseDTO
 

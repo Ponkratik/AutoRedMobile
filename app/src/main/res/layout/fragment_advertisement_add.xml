@@ -1,0 +1,630 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragment_advertisement_details"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black_800"
+    android:padding="16dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_advertisement"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:id="@+id/progress_circular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/button_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:contentDescription="@string/back"
+            android:src="@drawable/ic_baseline_arrow_back_24"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/white" />
+
+        <TextView
+            android:id="@+id/text_header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="@string/advertisement_creating"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@id/button_back"
+            app:layout_constraintLeft_toRightOf="@id/button_back"
+            app:layout_constraintTop_toTopOf="@id/button_back" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/photo_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipToPadding="false"
+            android:orientation="horizontal"
+            android:padding="16dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintTop_toBottomOf="@id/button_back"
+            tools:itemCount="5"
+            tools:listitem="@layout/item_image" />
+
+        <Button
+            android:id="@+id/button_add_photos"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="30dp"
+            android:backgroundTint="@color/black_700"
+            android:drawableLeft="@drawable/ic_baseline_add_24"
+            android:drawableTint="@color/white"
+            android:text="@string/add_photos"
+            android:textAllCaps="false"
+            app:layout_constraintTop_toBottomOf="@+id/photo_recycler_view" />
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingVertical="8dp"
+            app:layout_constraintTop_toBottomOf="@id/button_add_photos">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/container_vin"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColorHint="@color/white"
+                app:boxStrokeColor="@color/white"
+                app:errorEnabled="true"
+                app:hintTextColor="@color/white"
+                app:layout_constraintTop_toBottomOf="@+id/photo_recycler_view">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_text_vin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/vin"
+                    android:inputType="text"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/white" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/container_license_plate"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColorHint="@color/white"
+                app:boxStrokeColor="@color/white"
+                app:errorEnabled="true"
+                app:hintTextColor="@color/white"
+                app:layout_constraintTop_toBottomOf="@+id/photo_recycler_view">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_text_license_plate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/license_plate"
+                    android:inputType="text"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/white" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TableRow>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/container_make"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_marginEnd="4dp"
+                    android:layout_weight="1"
+                    android:textColorHint="@color/white"
+                    app:boxStrokeColor="@color/white"
+                    app:errorEnabled="true"
+                    app:hintTextColor="@color/white"
+                    app:layout_constraintTop_toBottomOf="@+id/photo_recycler_view">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edit_text_make"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/make"
+                        android:inputType="text"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/white" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/container_model"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:layout_weight="1"
+                    android:textColorHint="@color/white"
+                    app:boxStrokeColor="@color/white"
+                    app:errorEnabled="true"
+                    app:hintTextColor="@color/white"
+                    app:layout_constraintTop_toBottomOf="@+id/photo_recycler_view">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edit_text_model"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/model"
+                        android:inputType="text"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/white" />
+                </com.google.android.material.textfield.TextInputLayout>
+            </TableRow>
+
+            <TableRow>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/container_mfd_year"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_marginEnd="4dp"
+                    android:layout_weight="1"
+                    android:textColorHint="@color/white"
+                    app:boxStrokeColor="@color/white"
+                    app:errorEnabled="true"
+                    app:hintTextColor="@color/white"
+                    app:layout_constraintTop_toBottomOf="@+id/photo_recycler_view">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edit_text_mfd_year"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/mfd_year"
+                        android:inputType="number"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/white" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/container_color"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:layout_weight="1"
+                    android:textColorHint="@color/white"
+                    app:boxStrokeColor="@color/white"
+                    app:errorEnabled="true"
+                    app:hintTextColor="@color/white"
+                    app:layout_constraintTop_toBottomOf="@+id/photo_recycler_view">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edit_text_color"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/color"
+                        android:inputType="text"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/white" />
+                </com.google.android.material.textfield.TextInputLayout>
+            </TableRow>
+
+            <TableRow>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/container_fuel"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="4dp"
+                    android:layout_weight="1"
+                    android:textColorHint="@color/white"
+                    app:boxStrokeColor="@color/white"
+                    app:errorEnabled="true"
+                    app:hintTextColor="@color/white">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/edit_text_fuel"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/fuel_type"
+                        android:inputType="none"
+                        android:textColor="@color/white" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/container_body_type"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:layout_weight="1"
+                    android:textColorHint="@color/white"
+                    app:boxStrokeColor="@color/white"
+                    app:errorEnabled="true"
+                    app:hintTextColor="@color/white">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/edit_text_body_type"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/body_type"
+                        android:inputType="none"
+                        android:textColor="@color/white" />
+                </com.google.android.material.textfield.TextInputLayout>
+            </TableRow>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/container_transmission"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColorHint="@color/white"
+                app:boxStrokeColor="@color/white"
+                app:errorEnabled="true"
+                app:hintTextColor="@color/white">
+
+                <AutoCompleteTextView
+                    android:id="@+id/edit_text_transmisson"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/transmission_type"
+                    android:inputType="none"
+                    android:textColor="@color/white" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TableRow>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/container_doors"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_marginEnd="4dp"
+                    android:layout_weight="1"
+                    android:textColorHint="@color/white"
+                    app:boxStrokeColor="@color/white"
+                    app:errorEnabled="true"
+                    app:hintTextColor="@color/white"
+                    app:layout_constraintTop_toBottomOf="@+id/photo_recycler_view">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edit_text_doors"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/doors"
+                        android:inputType="number"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/white" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/container_seats"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:layout_weight="1"
+                    android:textColorHint="@color/white"
+                    app:boxStrokeColor="@color/white"
+                    app:errorEnabled="true"
+                    app:hintTextColor="@color/white"
+                    app:layout_constraintTop_toBottomOf="@+id/photo_recycler_view">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edit_text_seats"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/seats"
+                        android:inputType="text"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/white" />
+                </com.google.android.material.textfield.TextInputLayout>
+            </TableRow>
+
+            <TableRow>
+
+                <CheckBox
+                    android:id="@+id/checkbox_conditioner"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/white"
+                    android:text="@string/conditioner"
+                    android:textColor="@color/white"
+                    android:theme="@style/Checkbox.Red" />
+
+                <CheckBox
+                    android:id="@+id/checkbox_all_wheel_drive"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/white"
+                    android:text="@string/all_wheel_drive"
+                    android:textColor="@color/white"
+                    android:theme="@style/Checkbox.Red"
+                    tools:ignore="TouchTargetSizeCheck,TouchTargetSizeCheck" />
+            </TableRow>
+
+            <TableRow>
+
+                <CheckBox
+                    android:id="@+id/checkbox_leather_seats"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/white"
+                    android:text="@string/leather_seats"
+                    android:textColor="@color/white"
+                    android:theme="@style/Checkbox.Red" />
+
+                <CheckBox
+                    android:id="@+id/checkbox_child_seats"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/white"
+                    android:text="@string/child_seats"
+                    android:textColor="@color/white"
+                    android:theme="@style/Checkbox.Red" />
+            </TableRow>
+
+            <TableRow>
+
+                <CheckBox
+                    android:id="@+id/checkbox_heated_seats"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/white"
+                    android:text="@string/heated_seats"
+                    android:textColor="@color/white"
+                    android:theme="@style/Checkbox.Red"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+                <CheckBox
+                    android:id="@+id/checkbox_cooled_seats"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/white"
+                    android:text="@string/cooled_seats"
+                    android:textColor="@color/white"
+                    android:theme="@style/Checkbox.Red" />
+            </TableRow>
+
+            <TableRow>
+
+                <CheckBox
+                    android:id="@+id/checkbox_gps"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/white"
+                    android:text="@string/gps"
+                    android:textColor="@color/white"
+                    android:theme="@style/Checkbox.Red" />
+
+                <CheckBox
+                    android:id="@+id/checkbox_ski_rack"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/white"
+                    android:text="@string/ski_rack"
+                    android:textColor="@color/white"
+                    android:theme="@style/Checkbox.Red" />
+            </TableRow>
+
+            <TableRow>
+
+                <CheckBox
+                    android:id="@+id/checkbox_audio_input"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/white"
+                    android:text="@string/audio_input"
+                    android:textColor="@color/white"
+                    android:theme="@style/Checkbox.Red" />
+
+                <CheckBox
+                    android:id="@+id/checkbox_usb_input"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/white"
+                    android:text="@string/usb_input"
+                    android:textColor="@color/white"
+                    android:theme="@style/Checkbox.Red" />
+            </TableRow>
+
+            <TableRow>
+
+                <CheckBox
+                    android:id="@+id/checkbox_bluetooh"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/white"
+                    android:text="@string/bluetooth"
+                    android:textColor="@color/white"
+                    android:theme="@style/Checkbox.Red" />
+
+                <CheckBox
+                    android:id="@+id/checkbox_sun_roof"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/white"
+                    android:text="@string/sun_roof"
+                    android:textColor="@color/white"
+                    android:theme="@style/Checkbox.Red" />
+            </TableRow>
+
+            <TableRow>
+
+                <CheckBox
+                    android:id="@+id/checkbox_android_auto"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/white"
+                    android:text="@string/android_auto"
+                    android:textColor="@color/white"
+                    android:theme="@style/Checkbox.Red" />
+
+                <CheckBox
+                    android:id="@+id/checkbox_apple_car_play"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/white"
+                    android:text="@string/apple_carplay"
+                    android:textColor="@color/white"
+                    android:theme="@style/Checkbox.Red" />
+            </TableRow>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/container_price_per_day"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:textColorHint="@color/white"
+                app:boxStrokeColor="@color/white"
+                app:errorEnabled="true"
+                app:hintTextColor="@color/white"
+                app:layout_constraintTop_toBottomOf="@+id/photo_recycler_view">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_text_price_per_day"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/text_price_per_day"
+                    android:inputType="numberDecimal"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/white" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/container_price_per_week"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColorHint="@color/white"
+                app:boxStrokeColor="@color/white"
+                app:errorEnabled="true"
+                app:hintTextColor="@color/white"
+                app:layout_constraintTop_toBottomOf="@+id/photo_recycler_view">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_text_price_per_week"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/text_price_per_week"
+                    android:inputType="numberDecimal"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/white" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/container_price_per_month"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColorHint="@color/white"
+                app:boxStrokeColor="@color/white"
+                app:errorEnabled="true"
+                app:hintTextColor="@color/white"
+                app:layout_constraintTop_toBottomOf="@+id/photo_recycler_view">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_text_price_per_month"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/text_price_per_month"
+                    android:inputType="numberDecimal"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/white" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TableRow>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/container_longitude"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_marginEnd="4dp"
+                    android:layout_weight="1"
+                    android:textColorHint="@color/white"
+                    app:boxStrokeColor="@color/white"
+                    app:errorEnabled="true"
+                    app:hintTextColor="@color/white"
+                    app:layout_constraintTop_toBottomOf="@+id/photo_recycler_view">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edit_text_longitude"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/longitude"
+                        android:inputType="text"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/white" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/container_latitude"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:layout_weight="1"
+                    android:textColorHint="@color/white"
+                    app:boxStrokeColor="@color/white"
+                    app:errorEnabled="true"
+                    app:hintTextColor="@color/white"
+                    app:layout_constraintTop_toBottomOf="@+id/photo_recycler_view">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edit_text_latitude"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/latitude"
+                        android:inputType="text"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/white" />
+                </com.google.android.material.textfield.TextInputLayout>
+            </TableRow>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/container_location"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColorHint="@color/white"
+                app:boxStrokeColor="@color/white"
+                app:errorEnabled="true"
+                app:hintTextColor="@color/white"
+                app:layout_constraintTop_toBottomOf="@+id/photo_recycler_view">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_text_location"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/location"
+                    android:inputType="text"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/white" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TableRow android:layout_marginTop="16dp">
+
+                <Button
+                    android:id="@+id/button_clear"
+                    style="@style/Widget.AppCompat.Button.Borderless"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/clear" />
+
+                <Button
+                    android:id="@+id/button_create"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="35dp"
+                    android:background="@drawable/round_rectangle"
+                    android:text="@string/create"
+                    android:textAllCaps="false" />
+            </TableRow>
+
+        </TableLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

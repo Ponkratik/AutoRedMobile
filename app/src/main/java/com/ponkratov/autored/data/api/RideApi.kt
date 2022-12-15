@@ -1,9 +1,9 @@
 package com.ponkratov.autored.data.api
 
+import com.ponkratov.autored.data.model.response.AdvertisementResponseDTO
 import com.ponkratov.autored.data.model.response.MessageResponse
-import retrofit2.http.Multipart
-import retrofit2.http.POST
-import retrofit2.http.Part
+import com.ponkratov.autored.data.model.response.RideResponseDTO
+import retrofit2.http.*
 
 interface RideApi {
 
@@ -13,4 +13,10 @@ interface RideApi {
         @Part("advertisementId") advertisementId: Long,
         @Part("lessorId") lessorId: Long
     ): MessageResponse
+
+    @GET("ride/get/all/full/advertisement/{id}")
+    suspend fun getRideResponsesByAdvertisementId(@Path("id") advertisementId: Long): List<RideResponseDTO>
+
+    @GET("ride/get/all/full/lessor/{id}")
+    suspend fun getRideResponsesByLessorId(@Path("id") lessorId: Long): List<RideResponseDTO>
 }

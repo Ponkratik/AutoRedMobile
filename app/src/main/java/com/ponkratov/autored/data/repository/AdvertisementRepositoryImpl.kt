@@ -24,6 +24,14 @@ class AdvertisementRepositoryImpl(
                 }
         }
 
+    override suspend fun getAdvertisementsResponseByUserId(userId: Long): Result<List<AdvertisementResponse>> =
+        runCatching {
+            advertisementApi.getAdvertisementsResponseByUserId(userId)
+                .map {
+                    it.toDomain()
+                }
+        }
+
     override suspend fun getAdvertisementResponse(id: Long): Result<AdvertisementResponse> =
         runCatching {
             advertisementApi.getAdvertisementResponse(id).toDomain()
