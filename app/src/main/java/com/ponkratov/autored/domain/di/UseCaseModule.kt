@@ -17,4 +17,10 @@ val useCaseModule = module {
     singleOf(::CreateSupportRequestUseCase)
     singleOf(::GetRideResponsesByAdvertisementIdUseCase)
     singleOf(::GetRideResponsesByLessorIdUseCase)
+    singleOf(::AddReviewUserUseCase)
+    singleOf(::AddReviewCarUseCase)
+    singleOf(::StartRideUseCase)
+    singleOf(::EndRideUseCase)
+    singleOf(::SignActByLessorUseCase)
+    singleOf(::SignActByLesseeUseCase)
 }

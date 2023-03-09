@@ -30,6 +30,23 @@
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_details_to_review"
+            app:destination="@id/fragment_add_review_lessor"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragment_add_review_lessor"
+        android:name="com.ponkratov.autored.presentation.ui.home.tab.history.review.AddReviewLessorFragment"
+        tools:layout="@layout/fragment_add_review_lessor" >
+        <argument android:name="lesseeId"
+            app:argType="long"/>
+        <argument android:name="carId"
+            app:argType="long"/>
     </fragment>
 
     <fragment

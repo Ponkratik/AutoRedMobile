@@ -1,11 +1,11 @@
 package com.ponkratov.autored.presentation.ui.home.tab.account.addadvertisement
 
+import android.Manifest
 import android.app.AlertDialog
 import android.content.Context
 import android.content.ContextWrapper
-import android.database.Cursor
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
-import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -14,20 +14,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
-import android.widget.ImageView
-import android.widget.LinearLayout
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.view.forEach
-import androidx.core.view.get
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import androidx.loader.content.CursorLoader
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
-import com.ponkratov.autored.R
 import com.ponkratov.autored.databinding.FragmentAdvertisementAddBinding
-import com.ponkratov.autored.databinding.ItemImageBinding
 import com.ponkratov.autored.presentation.extensions.addHorisontalSpace
 import com.ponkratov.autored.presentation.extensions.hideKeyboard
 import kotlinx.coroutines.flow.launchIn
@@ -56,11 +50,16 @@ class AdvertisementAddFragment : Fragment() {
     private val selectImagesFromGallery =
         registerForActivityResult(ActivityResultContracts.GetMultipleContents()) { uriList: List<Uri>? ->
             uriList?.let {
-                imagesList = it.toMutableList()
+                imagesListUri = it.toMutableList()
                 imageAdapter.submitList(it)
             }
         }
-    private var imagesList: MutableList<Uri> = mutableListOf()
+    private var imagesListUri: MutableList<Uri> = mutableListOf()
+    private var imagesList: MutableList<Bitmap> = mutableListOf()
+
+    private val permissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) {}
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -137,17 +136,17 @@ class AdvertisementAddFragment : Fragment() {
             }
 
             buttonAddPhotos.setOnClickListener {
-                selectImagesFromGallery.launch("image/*")
+                if (hasPermission(Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                    selectImagesFromGallery.launch("image/*")
+                    imagesList = imagesListUri.map {
+                        MediaStore.Images.Media.getBitmap(requireActivity().contentResolver, it)
+                    }.toMutableList()
+                } else {
+                    permissionLauncher.launch(Manifest.permission.CAMERA)
+                }
             }
 
             buttonCreate.setOnClickListener {
-                val files: MutableList<File> = mutableListOf()
-                for(pos in 1 .. imageAdapter.currentList.size) {
-                    val view = requireNotNull(photoRecyclerView.findViewHolderForAdapterPosition(pos)?.itemView)
-                    val lL = view.findViewById(R.id.car_photo) as ImageView
-                    files.add(bmpToFile((lL.drawable as BitmapDrawable).bitmap))
-            }
-
                 if (!validateInputs()) return@setOnClickListener
                 viewModel.onSendButtonClicked(
                     checkboxConditioner.isChecked,
@@ -186,12 +185,9 @@ class AdvertisementAddFragment : Fragment() {
                     editTextPricePerDay.text.toString().toDouble(),
                     editTextPricePerWeek.text.toString().toDouble(),
                     editTextPricePerMonth.text.toString().toDouble(),
-                    files
+                    imagesList.map { bmpToFile(it) }
                 )
             }
-
-
-
 
             buttonClear.setOnClickListener {
                 clearInputs()
@@ -251,7 +247,11 @@ class AdvertisementAddFragment : Fragment() {
     }
 
     private fun validateInputs(): Boolean {
-        return true
+        if (imageAdapter.currentList.isEmpty()) {
+            return false
+        } else {
+            return true
+        }
     }
 
     private fun clearInputs() {
@@ -289,10 +289,17 @@ class AdvertisementAddFragment : Fragment() {
             checkboxSkiRack.isChecked = false
             checkboxSunRoof.isChecked = false
 
-            imagesList.clear()
+            imagesListUri.clear()
             imageAdapter.submitList(emptyList())
             hideKeyboard()
         }
+    }
+
+    private fun hasPermission(permission: String): Boolean {
+        return ContextCompat.checkSelfPermission(
+            requireContext(),
+            permission
+        ) == PackageManager.PERMISSION_GRANTED
     }
 
     override fun onDestroyView() {

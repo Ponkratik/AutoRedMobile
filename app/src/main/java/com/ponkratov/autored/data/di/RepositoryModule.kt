@@ -25,4 +25,8 @@ val repositoryModule = module {
     single {
         SupportRequestRepositoryImpl(get())
     } bind SupportRequestRepository::class
+
+    single {
+        ReviewRepositoryImpl(get())
+    } bind ReviewRepository::class
 }

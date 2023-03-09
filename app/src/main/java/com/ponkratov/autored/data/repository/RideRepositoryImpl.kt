@@ -13,6 +13,22 @@ class RideRepositoryImpl(
             rideApi.bookRide(advertisementId, lessorId).message
         }
 
+    override suspend fun startRide(rideId: Long): Result<String> = runCatching {
+        rideApi.startRide(rideId).message
+    }
+
+    override suspend fun endRide(rideId: Long): Result<String> = runCatching {
+        rideApi.endRide(rideId).message
+    }
+
+    override suspend fun signActByLessor(rideId: Long): Result<String> = runCatching {
+        rideApi.signActByLessor(rideId).message
+    }
+
+    override suspend fun signActByLessee(rideId: Long): Result<String> = runCatching {
+        rideApi.signActByLessee(rideId).message
+    }
+
     override suspend fun getRideResponsesByAdvertisementId(advertisementId: Long): Result<List<RideResponse>> =
         runCatching {
             rideApi.getRideResponsesByAdvertisementId(advertisementId).map {

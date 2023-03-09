@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:cardCornerRadius="25dp"
+    android:layout_margin="16dp"
     android:backgroundTint="@color/black_900">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -13,8 +14,10 @@
 
         <ImageView
             android:id="@+id/car_photo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="360dp"
+            android:layout_height="202dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
             android:contentDescription="@string/car_photo"
             tools:src="@tools:sample/avatars"
             app:layout_constraintTop_toTopOf="parent" />

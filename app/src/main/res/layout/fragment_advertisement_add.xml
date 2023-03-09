@@ -331,6 +331,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:backgroundTint="@color/white"
+                    android:buttonTint="@color/bordo_900"
                     android:text="@string/conditioner"
                     android:textColor="@color/white"
                     android:theme="@style/Checkbox.Red" />
@@ -340,6 +341,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:backgroundTint="@color/white"
+                    android:buttonTint="@color/bordo_900"
                     android:text="@string/all_wheel_drive"
                     android:textColor="@color/white"
                     android:theme="@style/Checkbox.Red"
@@ -353,6 +355,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:backgroundTint="@color/white"
+                    android:buttonTint="@color/bordo_900"
                     android:text="@string/leather_seats"
                     android:textColor="@color/white"
                     android:theme="@style/Checkbox.Red" />
@@ -362,6 +365,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:backgroundTint="@color/white"
+                    android:buttonTint="@color/bordo_900"
                     android:text="@string/child_seats"
                     android:textColor="@color/white"
                     android:theme="@style/Checkbox.Red" />
@@ -374,6 +378,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:backgroundTint="@color/white"
+                    android:buttonTint="@color/bordo_900"
                     android:text="@string/heated_seats"
                     android:textColor="@color/white"
                     android:theme="@style/Checkbox.Red"
@@ -384,6 +389,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:backgroundTint="@color/white"
+                    android:buttonTint="@color/bordo_900"
                     android:text="@string/cooled_seats"
                     android:textColor="@color/white"
                     android:theme="@style/Checkbox.Red" />
@@ -396,6 +402,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:backgroundTint="@color/white"
+                    android:buttonTint="@color/bordo_900"
                     android:text="@string/gps"
                     android:textColor="@color/white"
                     android:theme="@style/Checkbox.Red" />
@@ -405,6 +412,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:backgroundTint="@color/white"
+                    android:buttonTint="@color/bordo_900"
                     android:text="@string/ski_rack"
                     android:textColor="@color/white"
                     android:theme="@style/Checkbox.Red" />
@@ -417,6 +425,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:backgroundTint="@color/white"
+                    android:buttonTint="@color/bordo_900"
                     android:text="@string/audio_input"
                     android:textColor="@color/white"
                     android:theme="@style/Checkbox.Red" />
@@ -426,6 +435,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:backgroundTint="@color/white"
+                    android:buttonTint="@color/bordo_900"
                     android:text="@string/usb_input"
                     android:textColor="@color/white"
                     android:theme="@style/Checkbox.Red" />
@@ -438,6 +448,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:backgroundTint="@color/white"
+                    android:buttonTint="@color/bordo_900"
                     android:text="@string/bluetooth"
                     android:textColor="@color/white"
                     android:theme="@style/Checkbox.Red" />
@@ -447,6 +458,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:backgroundTint="@color/white"
+                    android:buttonTint="@color/bordo_900"
                     android:text="@string/sun_roof"
                     android:textColor="@color/white"
                     android:theme="@style/Checkbox.Red" />
@@ -459,6 +471,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:backgroundTint="@color/white"
+                    android:buttonTint="@color/bordo_900"
                     android:text="@string/android_auto"
                     android:textColor="@color/white"
                     android:theme="@style/Checkbox.Red" />
@@ -468,6 +481,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:backgroundTint="@color/white"
+                    android:buttonTint="@color/bordo_900"
                     android:text="@string/apple_carplay"
                     android:textColor="@color/white"
                     android:theme="@style/Checkbox.Red" />

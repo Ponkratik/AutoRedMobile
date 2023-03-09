@@ -11,16 +11,10 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.gson.Gson
 import com.ponkratov.autored.R
-import com.ponkratov.autored.databinding.FragmentHistoryBinding
 import com.ponkratov.autored.databinding.FragmentRideDetailsLessorBinding
-import com.ponkratov.autored.domain.model.response.AdvertisementResponse
 import com.ponkratov.autored.domain.model.response.RideResponse
 import com.ponkratov.autored.presentation.extensions.addHorisontalSpace
-import com.ponkratov.autored.presentation.ui.home.tab.account.ridelist.RideListLesseeFragmentDirections
-import com.ponkratov.autored.presentation.ui.home.tab.history.HistoryViewModel
-import com.ponkratov.autored.presentation.ui.home.tab.history.RideAdapter
 import com.ponkratov.autored.presentation.ui.home.tab.search.details.ImageAdapter
-import com.ponkratov.autored.presentation.ui.home.tab.search.list.SearchFragmentDirections
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.text.SimpleDateFormat
 import java.util.*
@@ -96,6 +90,15 @@ class RideDetailsLessorFragment : Fragment() {
             textLinkChat.text = rideResponse.user.email
             textLinkPayment.text = "Перейти"
 
+            textReview.setOnClickListener {
+                findNavController().navigate(
+                    RideDetailsLessorFragmentDirections.actionDetailsToReview(
+                        rideResponse.advertisementResponse.advertisement.userId,
+                        rideResponse.advertisementResponse.car.id
+                    )
+                )
+            }
+
             textLinkPayment.setOnClickListener {
                 findNavController().navigate(RideDetailsLessorFragmentDirections.actionDetailsToPayment())
             }
@@ -113,51 +116,84 @@ class RideDetailsLessorFragment : Fragment() {
                     .setNegativeButton(android.R.string.cancel, null)
                     .show()
             }
+
+            buttonStartRide.setOnClickListener {
+                AlertDialog
+                    .Builder(requireContext())
+                    .setTitle("Начало поездки")
+                    .setMessage("Нажимая на кнопку \"ОК\" вы подтверждаете ознакомление с условиями сервиса")
+                    .setPositiveButton(android.R.string.ok, null)
+                    .setNegativeButton(android.R.string.cancel, null)
+                    .show()
+            }
+
+            buttonEndRide.setOnClickListener {
+                AlertDialog
+                    .Builder(requireContext())
+                    .setTitle("Завершение поездки")
+                    .setMessage("Нажимая на кнопку \"ОК\" вы подтверждаете ознакомление с условиями сервиса")
+                    .setPositiveButton(android.R.string.ok, null)
+                    .setNegativeButton(android.R.string.cancel, null)
+                    .show()
+            }
         }
 
     }
 
     private fun initButtons(rideResponse: RideResponse) {
         with(binding) {
+            if (rideResponse.ride.dateStart == Date(0)) {
+                textReview.isVisible = false
+                descriptionTable.isVisible = true
+                buttonSignAct.isVisible = true
+                buttonStartRide.isVisible = false
+                buttonEndRide.isVisible = false
+                textStatus.text = "Автомобиль забронирован"
+                return
+            }
+
+            if (rideResponse.ride.dateStart == Date(0)
+                && rideResponse.ride.dateSignedLessor != Date(0)
+                && rideResponse.ride.dateSignedLessee == Date(0)) {
+                textReview.isVisible = false
+                descriptionTable.isVisible = true
+                buttonSignAct.isVisible = false
+                buttonStartRide.isVisible = false
+                buttonEndRide.isVisible = false
+                textStatus.text = "Ожидание подписания акта арендодателем"
+                return
+            }
+
+            if (rideResponse.ride.dateStart == Date(0)
+                && rideResponse.ride.dateSignedLessor != Date(0)
+                && rideResponse.ride.dateSignedLessee != Date(0)) {
+                textReview.isVisible = false
+                descriptionTable.isVisible = true
+                buttonSignAct.isVisible = false
+                buttonStartRide.isVisible = true
+                buttonEndRide.isVisible = false
+                textStatus.text = "Акт подписан"
+                return
+            }
+
+            if (rideResponse.ride.dateStart != Date(0)
+                && rideResponse.ride.dateEnd == Date(0)) {
+                textReview.isVisible = false
+                descriptionTable.isVisible = true
+                buttonSignAct.isVisible = false
+                buttonStartRide.isVisible = false
+                buttonEndRide.isVisible = true
+                textStatus.text = "Поездка начата"
+                return
+            }
+
             if (rideResponse.ride.dateEnd != Date(0)) {
                 textReview.isVisible = true
                 descriptionTable.isVisible = false
                 buttonSignAct.isVisible = false
                 buttonStartRide.isVisible = false
+                buttonEndRide.isVisible = false
                 textStatus.text = "Поездка завершена"
-                return
-            }
-
-            if (rideResponse.ride.dateEnd == Date(0)) {
-                textReview.isVisible = false
-                descriptionTable.isVisible = true
-                buttonSignAct.isVisible = true
-                buttonStartRide.isVisible = false
-                textStatus.text = "Автомобиль забронирован"
-                return
-            }
-
-            if (rideResponse.ride.dateSignedLessee != Date(0)
-                && rideResponse.ride.dateSignedLessor == Date(0)) {
-                textReview.isVisible = false
-                descriptionTable.isVisible = true
-                buttonSignAct.isVisible = true
-                buttonSignAct.isActivated = false
-                buttonStartRide.isVisible = false
-                textStatus.text = "Акт подписан"
-                return
-            }
-
-            if (rideResponse.ride.dateSignedLessee != Date(0)
-                && rideResponse.ride.dateSignedLessor != Date(0)
-                && rideResponse.ride.dateStart != Date(0)
-                && rideResponse.ride.dateEnd == Date(0)) {
-                textReview.isVisible = false
-                descriptionTable.isVisible = true
-                buttonSignAct.isVisible = false
-                buttonStartRide.isVisible = true
-                buttonStartRide.text = "Завершить поездку"
-                textStatus.text = "Поездка начата"
                 return
             }
         }

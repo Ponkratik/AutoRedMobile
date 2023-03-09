@@ -87,4 +87,13 @@
     <string name="post_review">Оставить отзыв</string>
     <string name="payment_successful">Оплата прошла успешно</string>
     <string name="payment">Оплата</string>
+    <string name="review">Отзыв</string>
+    <string name="_5">5</string>
+    <string name="_4">4</string>
+    <string name="_3">3</string>
+    <string name="_2">2</string>
+    <string name="_1">1</string>
+    <string name="review_on_lessor">Отзыв на арендатора</string>
+    <string name="review_on_car">Отзыв на автомобиль</string>
+    <string name="end_ride">Закончить поездку</string>
 </resources>

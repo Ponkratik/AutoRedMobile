@@ -79,7 +79,7 @@ class SearchFragment : Fragment() {
             viewModel
                 .dataFlow
                 .onEach {
-                    adapter.submitList(it)
+                    adapter.submitList(it.filter { ad -> ad.advertisement.verified })
                     layoutSwiperefresh.isRefreshing = false
                 }
                 .launchIn(viewLifecycleOwner.lifecycleScope)

@@ -1,12 +1,211 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragment_ride_details_lessor"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/black_800"
+    android:padding="16dp">
 
-    <TextView
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_ride"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="Детали" />
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:id="@+id/progress_circular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/button_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/back"
+            android:src="@drawable/ic_baseline_arrow_back_24"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/white" />
+
+        <TextView
+            android:id="@+id/text_header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="@string/ride_details"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@id/button_back"
+            app:layout_constraintLeft_toRightOf="@id/button_back"
+            app:layout_constraintTop_toTopOf="@id/button_back" />
+
+        <TextView
+            android:id="@+id/lessor_fio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:padding="8dp"
+            android:text="Test test test"
+            android:textColor="@color/white"
+            android:textSize="24sp"
+            app:layout_constraintTop_toBottomOf="@id/text_header" />
+
+        <TableRow
+            android:id="@+id/row_rate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/lessor_fio">
+
+            <TextView
+                android:id="@+id/text_rate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:paddingBottom="8dp"
+                android:text="5.0"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+
+            <ImageView
+                android:id="@+id/image_rate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/star"
+                android:paddingBottom="8dp"
+                android:src="@drawable/ic_baseline_star_rate_24"
+                app:tint="@color/bordo_800" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/row_status"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/row_rate">
+
+            <TextView
+                android:id="@+id/status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:paddingBottom="8dp"
+                android:text="@string/status"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/text_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:paddingBottom="8dp"
+                android:text="Поездка завершена"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+        </TableRow>
+
+        <TextView
+            android:id="@+id/text_review"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/post_review"
+            android:textAlignment="center"
+            android:paddingTop="8dp"
+            android:paddingBottom="16dp"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            app:layout_constraintTop_toBottomOf="@+id/row_status" />
+
+        <TableLayout
+            android:id="@+id/description_table"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="16dp"
+            android:stretchColumns="1"
+            app:layout_constraintTop_toBottomOf="@id/text_review">
+
+            <TableRow>
+                <TextView
+                    android:padding="3dip"
+                    android:text="@string/link_chat"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/text_link_chat"
+                    android:gravity="end"
+                    android:padding="3dip"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    tools:text="Седан" />
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    android:padding="3dip"
+                    android:text="@string/link_payment"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/text_link_payment"
+                    android:gravity="end"
+                    android:padding="3dip"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    tools:text="Седан" />
+            </TableRow>
+
+        </TableLayout>
+
+        <Button
+            android:id="@+id/button_sign_act"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="75dp"
+            android:layout_marginVertical="32dp"
+            android:background="@drawable/round_rectangle"
+            android:text="@string/sign_act"
+            android:textAllCaps="false"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/description_table" />
+
+        <Button
+            android:id="@+id/button_start_ride"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="75dp"
+            android:layout_marginVertical="32dp"
+            android:background="@drawable/round_rectangle"
+            android:text="@string/start_ride"
+            android:textAllCaps="false"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/description_table" />
+
+        <Button
+            android:id="@+id/button_end_ride"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="75dp"
+            android:layout_marginVertical="32dp"
+            android:background="@drawable/round_rectangle"
+            android:text="@string/end_ride"
+            android:textAllCaps="false"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/description_table" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

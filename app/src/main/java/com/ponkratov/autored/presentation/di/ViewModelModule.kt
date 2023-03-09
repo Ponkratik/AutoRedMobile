@@ -8,6 +8,8 @@ import com.ponkratov.autored.presentation.ui.home.tab.account.settings.SettingsV
 import com.ponkratov.autored.presentation.ui.home.tab.account.support.SupportRequestViewModel
 import com.ponkratov.autored.presentation.ui.home.tab.history.HistoryViewModel
 import com.ponkratov.autored.presentation.ui.home.tab.history.details.RideDetailsLessorViewModel
+import com.ponkratov.autored.presentation.ui.home.tab.account.ridedetails.review.AddReviewLesseeViewModel
+import com.ponkratov.autored.presentation.ui.home.tab.history.review.AddReviewLessorViewModel
 import com.ponkratov.autored.presentation.ui.home.tab.search.details.AdvertisementDetailsViewModel
 import com.ponkratov.autored.presentation.ui.home.tab.search.list.SearchViewModel
 import com.ponkratov.autored.presentation.ui.login.LoginViewModel
@@ -28,4 +30,6 @@ val viewModelModule = module {
     viewModelOf(::RideDetailsLessorViewModel)
     viewModelOf(::RideListLesseeViewModel)
     viewModelOf(::RideDetailsLesseeViewModel)
+    viewModelOf(::AddReviewLesseeViewModel)
+    viewModelOf(::AddReviewLessorViewModel)
 }

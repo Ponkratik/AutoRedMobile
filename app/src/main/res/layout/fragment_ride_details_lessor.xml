@@ -279,5 +279,17 @@
             android:textAllCaps="false"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/description_table" />
+
+        <Button
+            android:id="@+id/button_end_ride"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="75dp"
+            android:layout_marginVertical="32dp"
+            android:background="@drawable/round_rectangle"
+            android:text="@string/end_ride"
+            android:textAllCaps="false"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/description_table" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

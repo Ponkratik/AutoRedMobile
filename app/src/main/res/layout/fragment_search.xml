@@ -21,6 +21,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
+            android:buttonTint="@color/bordo_900"
             android:textColor="@color/white"
             android:text="@string/apply" />
 
