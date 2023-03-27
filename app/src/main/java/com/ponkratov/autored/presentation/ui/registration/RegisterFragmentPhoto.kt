@@ -3,12 +3,8 @@ package com.ponkratov.autored.presentation.ui.registration
 import android.Manifest
 import android.app.Activity
 import android.app.AlertDialog
-import android.content.Context
-import android.content.ContextWrapper
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
-import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -31,8 +27,6 @@ import kotlinx.coroutines.flow.onEach
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.io.File
 import java.io.FileOutputStream
-import java.io.OutputStream
-import java.util.*
 
 class RegisterFragmentPhoto : Fragment() {
     private var _binding: FragmentRegisterPhotoBinding? = null
@@ -64,7 +58,7 @@ class RegisterFragmentPhoto : Fragment() {
 
     private val selectAvatarFromGalleryResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.resultCode == Activity.RESULT_OK){
+            if (result.resultCode == Activity.RESULT_OK) {
                 binding.imageAvatar.setImageURI(result.data?.data)
                 latestAvatarPhotoUri = result.data?.data
             }
@@ -133,6 +127,31 @@ class RegisterFragmentPhoto : Fragment() {
                     return@setOnClickListener
                 }
 
+                val filesDir = requireContext().applicationContext.filesDir
+                val avatarFile = File(filesDir, "avatar.png")
+                val avatarInputStream = requireContext().contentResolver.openInputStream(
+                    requireNotNull(latestAvatarPhotoUri)
+                )
+                val avatarOutputStream = FileOutputStream(avatarFile)
+                avatarInputStream?.copyTo(avatarOutputStream)
+                avatarInputStream?.close()
+
+                val passportFile = File(filesDir, "passport.png")
+                val passportInputStream = requireContext().contentResolver.openInputStream(
+                    requireNotNull(latestPassportPhotoUri)
+                )
+                val passportOutputStream = FileOutputStream(passportFile)
+                passportInputStream?.copyTo(passportOutputStream)
+                passportInputStream?.close()
+
+                val driverLicenseFile = File(filesDir, "driverLicense.png")
+                val driverLicenseInputStream = requireContext().contentResolver.openInputStream(
+                    requireNotNull(latestDriverLicensePhotoUri)
+                )
+                val driverLicenseOutputStream = FileOutputStream(driverLicenseFile)
+                driverLicenseInputStream?.copyTo(driverLicenseOutputStream)
+                driverLicenseInputStream?.close()
+
                 viewModel.onRegisterButtonClicked(
                     fio = args.fio,
                     email = args.email,
@@ -142,9 +161,9 @@ class RegisterFragmentPhoto : Fragment() {
                     passportNumber = args.driverLicenseNumber,
                     driverLicenseNumber = args.driverLicenseNumber,
                     profileDescription = args.profileDescription,
-                    profilePhoto = bmpToFile((imageAvatar.drawable as BitmapDrawable).bitmap),
-                    passportPhoto = bmpToFile((imagePassport.drawable as BitmapDrawable).bitmap),
-                    driverLicensePhoto = bmpToFile((imageDriverLicense.drawable as BitmapDrawable).bitmap)
+                    profilePhoto = avatarFile,
+                    passportPhoto = passportFile,
+                    driverLicensePhoto = driverLicenseFile
                 )
             }
 
@@ -183,17 +202,6 @@ class RegisterFragmentPhoto : Fragment() {
         }
     }
 
-    private fun bmpToFile(bitmap: Bitmap): File {
-        val wrapper = ContextWrapper(requireContext())
-        var file = wrapper.getDir("Images", Context.MODE_PRIVATE)
-        file = File(file, "${UUID.randomUUID()}.jpg")
-        val stream: OutputStream = FileOutputStream(file)
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream)
-        stream.flush()
-        stream.close()
-        return file
-    }
-
     private fun getTmpFileUri(): Uri {
         val tmpFile =
             File.createTempFile("tmp_image_file", ".png", requireActivity().cacheDir).apply {
@@ -207,7 +215,8 @@ class RegisterFragmentPhoto : Fragment() {
             tmpFile
         )
     }
-    private fun openGalleryForImage(){
+
+    private fun openGalleryForImage() {
         val pickPhoto = Intent(
             Intent.ACTION_PICK,
             MediaStore.Images.Media.EXTERNAL_CONTENT_URI
