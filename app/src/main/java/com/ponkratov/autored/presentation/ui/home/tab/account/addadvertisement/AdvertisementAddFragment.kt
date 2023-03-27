@@ -247,11 +247,7 @@ class AdvertisementAddFragment : Fragment() {
     }
 
     private fun validateInputs(): Boolean {
-        if (imageAdapter.currentList.isEmpty()) {
-            return false
-        } else {
-            return true
-        }
+        return imageAdapter.currentList.isNotEmpty()
     }
 
     private fun clearInputs() {

@@ -1,14 +1,17 @@
 package com.ponkratov.autored.presentation.ui.registration
 
 import android.Manifest
+import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
 import android.content.ContextWrapper
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -60,12 +63,13 @@ class RegisterFragmentPhoto : Fragment() {
     private var latestDriverLicensePhotoUri: Uri? = null
 
     private val selectAvatarFromGalleryResult =
-        registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
-            uri?.let {
-                binding.imageAvatar.setImageURI(it)
-                latestAvatarPhotoUri = it
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK){
+                binding.imageAvatar.setImageURI(result.data?.data)
+                latestAvatarPhotoUri = result.data?.data
             }
         }
+
     private var latestAvatarPhotoUri: Uri? = null
 
     private val permissionLauncher = registerForActivityResult(
@@ -112,7 +116,7 @@ class RegisterFragmentPhoto : Fragment() {
             }
 
             buttonPhotoAvatar.setOnClickListener {
-                selectAvatarFromGalleryResult.launch("image/*")
+                openGalleryForImage()
             }
 
             buttonRegister.setOnClickListener {
@@ -202,6 +206,13 @@ class RegisterFragmentPhoto : Fragment() {
             "${BuildConfig.APPLICATION_ID}.provider",
             tmpFile
         )
+    }
+    private fun openGalleryForImage(){
+        val pickPhoto = Intent(
+            Intent.ACTION_PICK,
+            MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+        )
+        selectAvatarFromGalleryResult.launch(pickPhoto)
     }
 
     private fun hasPermission(permission: String): Boolean {
