@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.ponkratov.autored.databinding.FragmentRegisterWaitBinding
 
-class RegisterFragmentWait : Fragment() {
+class RegisterWaitFragment : Fragment() {
     private var _binding: FragmentRegisterWaitBinding? = null
     private val binding get() = requireNotNull(_binding)
 

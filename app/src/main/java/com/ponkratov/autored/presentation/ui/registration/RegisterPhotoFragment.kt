@@ -28,13 +28,13 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.io.File
 import java.io.FileOutputStream
 
-class RegisterFragmentPhoto : Fragment() {
+class RegisterPhotoFragment : Fragment() {
     private var _binding: FragmentRegisterPhotoBinding? = null
     private val binding get() = requireNotNull(_binding)
 
     private val viewModel by viewModel<RegisterPhotoViewModel>()
 
-    private val args by navArgs<RegisterFragmentPhotoArgs>()
+    private val args by navArgs<RegisterPhotoFragmentArgs>()
 
     private val takePassportImageResult =
         registerForActivityResult(ActivityResultContracts.TakePicture()) { isSuccess ->
@@ -192,7 +192,7 @@ class RegisterFragmentPhoto : Fragment() {
                 .dataFlow
                 .onEach {
                     progressCircular.isVisible = false
-                    findNavController().navigate(RegisterFragmentPhotoDirections.actionRegisterPhotoToRegisterWait())
+                    findNavController().navigate(RegisterPhotoFragmentDirections.actionRegisterPhotoToRegisterWait())
                 }
                 .launchIn(viewLifecycleOwner.lifecycleScope)
 

@@ -45,7 +45,7 @@
 
     <fragment
         android:id="@+id/fragment_register_photo"
-        android:name="com.ponkratov.autored.presentation.ui.registration.RegisterFragmentPhoto"
+        android:name="com.ponkratov.autored.presentation.ui.registration.RegisterPhotoFragment"
         android:label="RegisterFragmentPhoto"
         tools:layout="@layout/fragment_register_photo">
         <action
@@ -93,7 +93,7 @@
 
     <fragment
         android:id="@+id/fragment_register_wait"
-        android:name="com.ponkratov.autored.presentation.ui.registration.RegisterFragmentWait"
+        android:name="com.ponkratov.autored.presentation.ui.registration.RegisterWaitFragment"
         android:label="RegisterFragmentWait"
         tools:layout="@layout/fragment_register_wait" />
 </navigation>
