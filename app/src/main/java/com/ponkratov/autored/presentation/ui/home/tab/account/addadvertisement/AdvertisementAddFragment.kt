@@ -2,13 +2,9 @@ package com.ponkratov.autored.presentation.ui.home.tab.account.addadvertisement
 
 import android.Manifest
 import android.app.AlertDialog
-import android.content.Context
-import android.content.ContextWrapper
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -29,7 +25,6 @@ import kotlinx.coroutines.flow.onEach
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.io.File
 import java.io.FileOutputStream
-import java.io.OutputStream
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -55,7 +50,6 @@ class AdvertisementAddFragment : Fragment() {
             }
         }
     private var imagesListUri: MutableList<Uri> = mutableListOf()
-    private var imagesList: MutableList<Bitmap> = mutableListOf()
 
     private val permissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
@@ -76,14 +70,11 @@ class AdvertisementAddFragment : Fragment() {
 
         with(binding) {
             initComponents()
-
-
         }
     }
 
     private fun initComponents() {
         with(binding) {
-
             progressCircular.isVisible = false
             layoutAdvertisement.isVisible = true
 
@@ -136,14 +127,7 @@ class AdvertisementAddFragment : Fragment() {
             }
 
             buttonAddPhotos.setOnClickListener {
-                if (hasPermission(Manifest.permission.READ_EXTERNAL_STORAGE)) {
-                    selectImagesFromGallery.launch("image/*")
-                    imagesList = imagesListUri.map {
-                        MediaStore.Images.Media.getBitmap(requireActivity().contentResolver, it)
-                    }.toMutableList()
-                } else {
-                    permissionLauncher.launch(Manifest.permission.CAMERA)
-                }
+                openGalleryForImage()
             }
 
             buttonCreate.setOnClickListener {
@@ -185,7 +169,15 @@ class AdvertisementAddFragment : Fragment() {
                     editTextPricePerDay.text.toString().toDouble(),
                     editTextPricePerWeek.text.toString().toDouble(),
                     editTextPricePerMonth.text.toString().toDouble(),
-                    imagesList.map { bmpToFile(it) }
+                    imagesListUri.map {
+                        val filesDir = requireContext().applicationContext.filesDir
+                        val tempFile = File(filesDir, "car-${UUID.randomUUID()}.png")
+                        val tempInputStream = requireContext().contentResolver.openInputStream(it)
+                        val tempOutputStream = FileOutputStream(tempFile)
+                        tempInputStream?.copyTo(tempOutputStream)
+                        tempInputStream?.close()
+                        tempFile
+                    }
                 )
             }
 
@@ -235,17 +227,6 @@ class AdvertisementAddFragment : Fragment() {
         }
     }
 
-    private fun bmpToFile(bitmap: Bitmap): File {
-        val wrapper = ContextWrapper(requireContext())
-        var file = wrapper.getDir("Images", Context.MODE_PRIVATE)
-        file = File(file, "${UUID.randomUUID()}.jpg")
-        val stream: OutputStream = FileOutputStream(file)
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream)
-        stream.flush()
-        stream.close()
-        return file
-    }
-
     private fun validateInputs(): Boolean {
         return imageAdapter.currentList.isNotEmpty()
     }
@@ -288,6 +269,14 @@ class AdvertisementAddFragment : Fragment() {
             imagesListUri.clear()
             imageAdapter.submitList(emptyList())
             hideKeyboard()
+        }
+    }
+
+    private fun openGalleryForImage() {
+        if (hasPermission(Manifest.permission.READ_EXTERNAL_STORAGE)) {
+            selectImagesFromGallery.launch("image/*")
+        } else {
+            permissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
         }
     }
 
